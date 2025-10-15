@@ -1,0 +1,46 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    ports:
+      - 5678:5678
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ~/docker_shared:/home/shared
+    networks:
+      - mainnet
+    env_file:
+      - .env
+    restart: always
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/app/backend
+    networks:
+      - mainnet
+    env_file:
+      - .env
+    restart: always
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - 5173:5173
+    volumes:
+      - ./frontend:/app/frontend
+    networks:
+      - mainnet
+    restart: always
+
+volumes:
+  n8n_data:
+    external: true
+
+networks:
+  mainnet:
