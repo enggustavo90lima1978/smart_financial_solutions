@@ -7,6 +7,8 @@ A arquitetura utiliza **LangChain** para orquestração de Agentes especializado
 
 Toda a aplicação é empacotada e executada através do **Docker Compose**, garantindo um *setup* rápido e confiável.
 
+>  ! Projeto em desenvolvimento, README desatualizado e frontend não construído!
+
 ## 🚀 Instalação e Inicialização
 
 ### **Pré-requisitos**
@@ -41,7 +43,7 @@ Para executar este projeto, você só precisa ter o **Docker** e o **Docker Comp
 
 ### **Inicialização da aplicação**
 
-Para subir todos os serviços (**Streamlit** e **FastAPI**), execute o seguinte comando (ainda no diretório raiz):
+Para subir todos os serviços (**Frontend** e **FastAPI**), execute o seguinte comando (ainda no diretório raiz):
 
 ```bash
 docker compose up --build
@@ -74,7 +76,7 @@ TODO
 
 | Serviço | URL |
 | :--- | :--- |
-| **Frontend (Streamlit)** | `http://localhost:8501` |
+| **Frontend (React)** | `http://localhost:8501` |
 | **API Docs (FastAPI - Swagger UI)** | `http://localhost:8000/api/docs` |
 
 ----
@@ -89,8 +91,7 @@ A estrutura do projeto está organizada da seguinte forma:
 ├── .env.example              # Exemplo de arquivo com as variáveis de ambiente
 ├── compose.yml        # Orquestração dos serviços Docker
 ├── Dockerfile                # Dockerfile para o backend (FastAPI)
-├── Dockerfile.streamlit      # Dockerfile para o frontend (Streamlit)
-├── init.sql                  # Script de inicialização do banco de dados MySQL
+├── Dockerfile.frontend      # Dockerfile para o frontend (React)
 ├── backend/                  # Código fonte do backend (FastAPI)
 │   ├── src/
 |   |   ├── agents/
@@ -103,13 +104,6 @@ A estrutura do projeto está organizada da seguinte forma:
 │   │   └── settings.py       # Configurações recebidas das variáveis de ambiente
 │   ├── requirements.txt      # Arquivo de instalação das dependências
 │   └── ...                   # Arquivos de configurações do projeto
-├── frontend/                 # Código fonte do frontend (Streamlit)
-│   ├── src/
-|   |   ├── components/       # Componentes para a página Streamlit 
-│   │   ├── main.py
-|   |   ├── README.md         # Documentação específica da interface
-│   │   └── ...
-│   └── requirements.txt
 └── README.md                 # Esta documentação
 ```
 
