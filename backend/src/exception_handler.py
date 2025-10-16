@@ -1,3 +1,5 @@
+"""Classe para gerenciamento de exceções e respostas ao usuário"""
+
 from zipfile import BadZipFile
 
 from fastapi import status
@@ -14,6 +16,7 @@ from src.utils.exceptions import (
 )
 
 
+# sobrescrevendo métodos da classe base
 class ExceptionHandlerMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request, call_next):
         try:

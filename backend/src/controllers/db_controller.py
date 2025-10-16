@@ -1,3 +1,5 @@
+"""Rotas para serviços relacionados ao banco de dados"""
+
 from fastapi import APIRouter
 
 from src.services import get_graph_db, init_db

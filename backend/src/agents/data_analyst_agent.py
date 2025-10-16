@@ -23,8 +23,8 @@ from .base_agent import BaseAgent
 
 class DataAnalystAgent(BaseAgent):
     """
-    An agent specialized in data analysis and visualization.
-    This agent uses tools to analyze data and generate graphs based on user requests.
+    Um agente especializado em análise e visualização de dados.
+    Este agente utiliza ferramentas para analisar dados e gerar gráficos com base nas solicitações do usuário.
     """
 
     def __init__(self):
@@ -63,7 +63,7 @@ Follow these rules strictly:
 
     @property
     def tools(self):
-        """Defines the tools available to the data analyst agent."""
+        """Retorna as ferramentas disponíveis para o agente."""
 
         tools: list[BaseTool] = [
             create_bar_chart,

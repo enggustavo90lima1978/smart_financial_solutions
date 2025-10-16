@@ -1,3 +1,5 @@
+"""Rotas para serviços relacionados ao agente"""
+
 from fastapi import APIRouter, Depends, UploadFile
 
 from src.schemas import ApiKeyInput, UserInput

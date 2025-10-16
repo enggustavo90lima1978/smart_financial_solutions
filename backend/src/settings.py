@@ -1,9 +1,11 @@
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# Necessário para carregar o LangSmith
 load_dotenv('.env', encoding='utf-8')
 
 
+# Configurações de variáveis ambiente
 class Settings(BaseSettings):
     groq_api_key: str | None = None
     gemini_api_key: str | None = None

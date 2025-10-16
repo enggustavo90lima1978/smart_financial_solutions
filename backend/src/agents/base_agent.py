@@ -1,3 +1,5 @@
+"""Classe base para outros agentes herdarem métodos comuns"""
+
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain.chains.conversation.memory import ConversationSummaryMemory
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -32,22 +34,21 @@ class BaseAgent:
 
     @property
     def tools(self):
-        """Add tools to amplify the agent capabilities."""
+        """Adiciona ferramentas para amplificar as capacidades do agente."""
         tools = []
 
         return tools
 
     # Criar modelo de chat do Gemini
     def init_gemini_model(self, model_name='gemini-1.5-pro', **kwargs) -> None:
-        """Instantiate a Gemini chat model and register for the agent.
+        """Instancia um modelo de chat Gemini e o registra para o agente.
 
         Args:
-            model_name (str, optional): Name of model to be used. Defaults to 'gemini-1.5-pro'.
-            temperature (int, optional): Temperature used in the model.
+            model_name (str, optional): Nome do modelo a ser usado. Padrão: 'gemini-1.5-pro'.
+            temperature (int, optional): Temperatura usada no modelo.
 
         Raises:
-            APIKeyNotFoundException: raised when no API key is present.
-        """
+            APIKeyNotFoundException: levantada quando nenhuma chave de API estiver presente."""
         if not settings.gemini_api_key:
             raise APIKeyNotFoundException(
                 'Your Gemini API key is null, add an API key to the environment to proceed.'
@@ -62,15 +63,14 @@ class BaseAgent:
 
     # Criar modelo de chat do Groq
     def init_groq_model(self, model_name='qwen/qwen3-32b', **kwargs) -> None:
-        """Instantiate a Groq chat model and register for the agent.
+        """Instancia um modelo de chat Groq e o registra para o agente.
 
         Args:
-            model_name (str, optional): Name of model to be used. Defaults to 'qwen/qwen3-32b'.
-            temperature (int, optional): Temperature used in the model
+            model_name (str, optional): Nome do modelo a ser usado. Padrão: 'qwen/qwen3-32b'.
+            temperature (int, optional): Temperatura usada no modelo.
 
         Raises:
-            APIKeyNotFoundException: raised when no API key is present.
-        """
+            APIKeyNotFoundException: levantada quando nenhuma chave de API estiver presente."""
         if not settings.groq_api_key:
             raise APIKeyNotFoundException(
                 'Your Groq API key is null, add an API key to the environment to proceed.'
@@ -84,7 +84,7 @@ class BaseAgent:
         return
 
     def _init_default_llm(self):
-        """Instantiate a LLM predefined model when needed, based off the API keys available."""
+        """Instancia um modelo LLM predefinido quando necessário, com base nas chaves de API disponíveis."""
 
         if settings.groq_api_key:
             self.init_groq_model('qwen/qwen3-32b', temperature=0)
@@ -103,12 +103,12 @@ class BaseAgent:
         memory_key: str | None = None,
         verbose: bool = True,
     ):
-        """Instantiate an agent using the defined options. Should be used after modifying the LLM object.
+        """Instancia um agente usando as opções definidas. Deve ser usado após modificar o objeto LLM.
 
         Args:
-            tools (any, optional): Tools for the agent, if None the default toolset is used.
-            prompt (ChatPromptTemplate | None, optional): Prompt template used in the agent, if None the default template is used.
-            memory (BaseMemory | None, optional): Memory instance used for the agent, if None uses the default ConversationSummarizeMemory:
+            tools (any, optional): Ferramentas para o agente, se for None, o conjunto padrão de ferramentas é usado.
+            prompt (ChatPromptTemplate | None, optional): Template de prompt usado no agente, se for None, o template padrão é usado.
+            memory (BaseMemory | None, optional): Instância de memória usada para o agente, se for None, usa a ConversationSummarizeMemory padrão:
 
             ```memory = ConversationSummaryMemory(
                 memory_key=memory_key,
@@ -118,12 +118,11 @@ class BaseAgent:
                 llm=self._llm,
             )
             ```
-            memory_key (str | None, optional): Memory key used in the prompt template for chat history, if None no memory will be added for the agent.
-            verbose (bool, optional): If the agent will print it's actions in console.
+            memory_key (str | None, optional): Chave de memória usada no template de prompt para o histórico de chat, se for None, nenhuma memória será adicionada ao agente.
+            verbose (bool, optional): Se o agente imprimirá suas ações no console.
 
         Raises:
-            APIKeyNotFoundException: if no API key is provided for initiating a LLM.
-        """
+            APIKeyNotFoundException: se nenhuma chave de API for fornecida para iniciar um LLM."""
         if self._llm is None:
             self._init_default_llm()
 

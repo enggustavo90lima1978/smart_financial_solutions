@@ -1,3 +1,5 @@
+"""Ferramentas para formatação da saída do agente"""
+
 import json
 
 from langchain.tools import tool

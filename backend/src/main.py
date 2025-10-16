@@ -14,11 +14,8 @@ app = FastAPI(
     version='1.0.0',
 )
 
-origins = [
-    '*',
-]
-
 # CORS para restrição de domínios, liberal por padrão.
+origins = ['*']
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -28,9 +25,15 @@ app.add_middleware(
 
 app.add_middleware(ExceptionHandlerMiddleware)
 
+# Rotas
+
 
 @app.head('/healthz', status_code=200)
 async def ping():
+    """
+    Verifica o status operacional da API.
+    Retorna HTTP 200 OK se a aplicação estiver em execução.
+    """
     return True
 
 

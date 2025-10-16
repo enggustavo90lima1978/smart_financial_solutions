@@ -1,3 +1,5 @@
+"""Ferramentas para o agente de análise de dados"""
+
 import io
 import uuid
 
@@ -13,7 +15,7 @@ from src.services.db_services import get_graph_metadata, insert_graphs_db
 
 def _save_graph_to_db(fig: BaseFigure, metadata: str) -> str:
     """
-    Saves the graph's JSON and metadata to a database and returns a unique ID.
+    Função para salvar o JSON gerado por ferramentas no banco de dados.
     """
     graph_id = str(uuid.uuid4())
     graph_json = fig.to_json()
@@ -363,9 +365,7 @@ def find_clusters_and_plot(x_column: str, y_column: str, n_clusters: int) -> dic
     kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
     cluster_data = df[[x_column, y_column]].dropna()
     cluster_data['cluster'] = kmeans.fit_predict(cluster_data)
-    cluster_data['cluster'] = cluster_data['cluster'].astype(
-        str
-    )  # For discrete colors in plotly
+    cluster_data['cluster'] = cluster_data['cluster'].astype(str)
 
     fig = px.scatter(
         cluster_data,

@@ -1,3 +1,5 @@
+"""Serviço para processamento de dados recebidos via upload."""
+
 import zipfile
 from io import BytesIO
 
@@ -10,14 +12,16 @@ df: pd.DataFrame | None = None
 
 
 def get_dataframe():
-    """Returns the global pandas DataFrame used."""
+    """Retorna o DataFrame global do pandas em uso."""
     return df
 
 
 class DataHandler:
     """
-    Handles data loading and dataframe population.
-    An instance of this class can be used to load a dataset from a CSV or zip file.
+    Manipulador de Dados (DataHandler).
+    Gerencia o carregamento de dados e o preenchimento do DataFrame.
+    Uma instância desta classe pode ser usada para carregar um conjunto de dados
+    a partir de um arquivo CSV ou ZIP.
     """
 
     def __init__(self):
@@ -29,19 +33,20 @@ class DataHandler:
         separator: str = ',',
         header: int = 0,
     ) -> bool:
-        """Loads data from an uploaded file (CSV or a ZIP containing a CSV)
-        into a pandas DataFrame. Inject data into a global df variable.
+        """
+        Carrega dados de um arquivo enviado (CSV ou ZIP contendo um CSV)
+        para um DataFrame do pandas. Injeta os dados na variável global df.
 
         Args:
-            data (UploadFile): file to be read.
-            separator (str, optional): csv separator. Defaults to ','.
-            header (int, optional): headers line. Defaults to 0.
+            data (UploadFile): Arquivo a ser lido.
+            separator (str, optional): Separador do CSV. Padrão é ','.
+            header (int, optional): Linha dos cabeçalhos. Padrão é 0.
 
         Raises:
-            WrongFileTypeError: When the file received is not supported.
+            WrongFileTypeError: Quando o tipo de arquivo recebido não é suportado.
 
         Returns:
-            bool: True if read was successful.
+            bool: True se a leitura foi bem-sucedida.
         """
         global df
         file = await data.read()
@@ -59,23 +64,26 @@ class DataHandler:
                 'Please upload a CSV or a ZIP file containing a CSV.'
             )
 
+        # Retorna as primeiras linhas do DataFrame em formato JSON para pré-visualização
         return df.head().to_json()
 
     async def _load_zip(self, file: BytesIO, sep: str, header: int):
-        """Function for reading zip files, decompressing and returning the resulting DataFrame.
+        """
+        Função auxiliar para ler arquivos ZIP, descompactar e retornar o DataFrame resultante.
 
         Args:
-            file (BytesIO): zip file
-            sep (str): csv separator
-            header (int): headers line
+            file (BytesIO): O arquivo ZIP em memória.
+            sep (str): Separador do CSV.
+            header (int): Linha dos cabeçalhos.
 
         Raises:
-            FileNotFoundError: When no CSV file is found after unzipping.
+            FileNotFoundError: Quando nenhum arquivo CSV é encontrado após a descompactação.
 
         Returns:
-            DataFrame: Resulting dataframe read.
+            DataFrame: O DataFrame resultante da leitura.
         """
         with zipfile.ZipFile(file) as zip_file:
+            # Encontra o primeiro arquivo que termina com '.csv' dentro do zip
             csv_filename = next(
                 (name for name in zip_file.namelist() if name.endswith('.csv')),
                 None,

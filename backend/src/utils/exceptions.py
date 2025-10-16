@@ -1,3 +1,6 @@
+"""Classe para definição de novas exceções da aplicação"""
+
+
 class WrongFileTypeError(Exception):
     def __init__(self, msg: str = None):
         self.msg = msg or 'Wrong file type received, only csv is supported!'
