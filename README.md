@@ -78,6 +78,7 @@ TODO
 | :--- | :--- |
 | **Frontend (React)** | `http://localhost:8501` |
 | **API Docs (FastAPI - Swagger UI)** | `http://localhost:8000/api/docs` |
+| **n8n** | `http://localhost:5678` |
 
 ----
 
